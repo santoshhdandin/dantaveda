@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/floating-agents.css">
 <script type='text/javascript' src='https://api.netlify.com/W_MCbOzK05fQ_Jvf6Nvf9qU99KsApKhYKFbMHV9UUi-1Oo-FMID9WhGxx1KQO4X4yjiB0MoeTfLufWQgzikNMkS5Zw5NG1FycNrEBSIso1gaxqKVTczKzECZS_y_to_Ogojw0GlGsF0RXIO7_bNk1ycieh2cgZah5TiEgfNlRodkdflqLkCZyp8D_WDAa7QLSMqFKwRDmkQ6fJ1oKBLDvn1f3LAYDZzDkjbH4K0_XR2_kyUiqcfw1tcAI_L6fNmRnwDytjtEgzqoqUOvEcVv-1hRnkx3ghGzZzK2udWeBrDwHmajRzjG6BKe-h2r5Fo5MDEYnszPFqYZIK_uFxjmfL7SGJ247a7aXy7HBDryVykFRmYgpci3sIGoSc7cNCwQJo5BxsfgXwU6uraYJTA5veSHZkH7P5aOqZvGkzO2hCFNq6q_iR7MuWoQbw4C55A6qvCvhF9Le5OmP5J1x6mzMuj0DiaobgVcMjUcZpUkpfwAd6qD9JnekVcN2J11buo4E37FUieFvmzUhGUgittd'></script></head>
 
 <body>
@@ -282,7 +283,77 @@
         </div>
     </footer>
 
+    <!-- Floating Agent Buttons -->
+    <div class="floating-agents">
+        <button id="voiceBtn" class="agent-button voice-button pulse" aria-label="Voice Call Agent">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <button id="chatBtn" class="agent-button chat-button pulse" aria-label="Chat Agent">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+    </div>
+
+    <!-- Chat Widget -->
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">D</div>
+                <div class="chat-info">
+                    <h4>Dantaveda Assistant</h4>
+                    <span class="chat-status">Online</span>
+                </div>
+            </div>
+            <button id="chatClose" class="chat-close" aria-label="Close chat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="chat-messages">
+            <div id="typingIndicator" class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type your message...">
+            <button id="chatSend" class="chat-send" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Voice Call Widget -->
+    <div id="voiceWidget" class="voice-widget">
+        <div class="voice-header">
+            <div class="voice-avatar">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <h4>Voice Assistant</h4>
+            <span class="voice-status">Connected</span>
+        </div>
+        <div class="voice-body">
+            <div id="voiceTimer" class="voice-timer">00:00</div>
+            <div id="voiceState" class="voice-state">Ready to help</div>
+            <div id="voiceIndicator" class="voice-indicator">
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+                <div class="voice-bar"></div>
+            </div>
+        </div>
+        <div class="voice-controls">
+            <button id="voiceMute" class="voice-control-btn mute" aria-label="Mute">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <button id="voiceEnd" class="voice-control-btn end" aria-label="End call">
+                <i class="fas fa-phone-slash"></i>
+            </button>
+        </div>
+    </div>
+
     <script src="js/main.js"></script>
+    <script src="js/agents.js"></script>
 </body>
 
 </html>
