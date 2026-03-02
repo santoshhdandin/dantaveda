@@ -1,0 +1,62 @@
+export default {
+  async fetch(request, env) {
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
+
+    try {
+      const requestData = await request.json();
+      const userMessage = requestData.message;
+      const incomingSessionId = requestData.session_id; 
+
+      if (!env.LYZR_API_KEY) {
+        throw new Error("CRITICAL: LYZR_API_KEY is missing!");
+      }
+      
+      // Enforce the new environment variable
+      if (!env.LYZR_VOICE_AGENT_ID) {
+        throw new Error("CRITICAL: LYZR_VOICE_AGENT_ID is missing!");
+      }
+
+      const lyzrResponse = await fetch("https://agent-prod.studio.lyzr.ai/v3/inference/chat/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": env.LYZR_API_KEY
+        },
+        body: JSON.stringify({
+          user_id: "santoshhdandin@gmail.com",
+          agent_id: env.LYZR_VOICE_AGENT_ID, // Replaced hardcoded ID
+          session_id: incomingSessionId || `voice-session-${Date.now()}`,
+          message: userMessage
+        })
+      });
+
+      if (!lyzrResponse.ok) {
+        const errText = await lyzrResponse.text();
+        throw new Error(`Lyzr API Error: ${errText}`);
+      }
+
+      const data = await lyzrResponse.json();
+      return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      });
+
+    } catch (error) {
+      return new Response(JSON.stringify({ 
+        error: error.message,
+        status: "failed" 
+      }), {
+        status: 500,
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      });
+    }
+  }
+};

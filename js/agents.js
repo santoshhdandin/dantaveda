@@ -53,17 +53,17 @@ class WebChatAgent {
         });
 
         const data = await response.json();
-        return data.response || data.message || 'I received your message. How else can I help you?';
+        return data.reply || data.response || data.message || 'I received your message. How else can I help you?';
     }
 
     getDemoResponse(message) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const responses = {
-                    'appointment': 'I can help you book an appointment! Our available slots are Monday to Saturday, 10 AM to 8 PM. Would you like me to check availability for a specific date?',
+                    'appointment': 'I can help you book an appointment! Our available slots are Monday to Saturday, 9 AM to 9 PM. Would you like me to check availability for a specific date?',
                     'services': 'We offer comprehensive dental services including general dentistry, cosmetic procedures, root canal treatments, implants, orthodontics, and pediatric care. Which service interests you?',
                     'location': 'We\'re located in Haveri, Karnataka. Would you like directions or our exact address?',
-                    'emergency': 'For dental emergencies, please call us immediately at +91 99999 99999. We prioritize emergency cases.',
+                    'emergency': 'For dental emergencies, please call us immediately at +1 908 538 6155. We prioritize emergency cases.',
                     'default': 'Thank you for your message! Dr. Vinaya and our team are here to help. Could you please provide more details about how we can assist you?'
                 };
 
@@ -254,7 +254,7 @@ class VoiceAgent {
         });
 
         const data = await response.json();
-        return data.response || data.message || 'I received your message. How else can I help you?';
+        return data.reply || data.response || data.message || 'I received your message. How else can I help you?';
     }
 
     getDemoResponse(message) {
@@ -366,6 +366,8 @@ class VoiceAgent {
 
 let chatAgent;
 let voiceAgent;
+let preConfiguredChatEndpoint = null;
+let preConfiguredVoiceEndpoint = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatBtn = document.getElementById('chatBtn');
@@ -376,6 +378,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chatAgent = new WebChatAgent();
     voiceAgent = new VoiceAgent();
+
+    if (preConfiguredChatEndpoint || preConfiguredVoiceEndpoint) {
+        window.setAgentEndpoints(preConfiguredChatEndpoint, preConfiguredVoiceEndpoint);
+    }
 
     chatBtn.addEventListener('click', () => {
         const isActive = chatWidget.classList.toggle('active');
@@ -401,6 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.setAgentEndpoints = function(chatEndpoint, voiceEndpoint) {
+    if (!chatAgent && !voiceAgent) {
+        preConfiguredChatEndpoint = chatEndpoint;
+        preConfiguredVoiceEndpoint = voiceEndpoint;
+    }
     if (chatAgent && chatEndpoint) {
         chatAgent.setCloudflareEndpoint(chatEndpoint);
     }
@@ -409,3 +419,8 @@ window.setAgentEndpoints = function(chatEndpoint, voiceEndpoint) {
     }
     console.log('Agent endpoints configured');
 };
+
+window.setAgentEndpoints(
+  'https://dantaveda-chatbot.santoshhdandin.workers.dev',  // Chat endpoint
+  'https://dantaveda-voiceassistant.santoshhdandin.workers.dev'  // Voice endpoint
+);
