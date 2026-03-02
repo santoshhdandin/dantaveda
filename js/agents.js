@@ -53,7 +53,7 @@ class WebChatAgent {
         });
 
         const data = await response.json();
-        return data.response || data.message || 'I received your message. How else can I help you?';
+        return data.reply || data.response || data.message || 'I received your message. How else can I help you?';
     }
 
     getDemoResponse(message) {
@@ -254,7 +254,7 @@ class VoiceAgent {
         });
 
         const data = await response.json();
-        return data.response || data.message || 'I received your message. How else can I help you?';
+        return data.reply || data.response || data.message || 'I received your message. How else can I help you?';
     }
 
     getDemoResponse(message) {
@@ -366,6 +366,8 @@ class VoiceAgent {
 
 let chatAgent;
 let voiceAgent;
+let preConfiguredChatEndpoint = null;
+let preConfiguredVoiceEndpoint = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatBtn = document.getElementById('chatBtn');
@@ -376,6 +378,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chatAgent = new WebChatAgent();
     voiceAgent = new VoiceAgent();
+
+    if (preConfiguredChatEndpoint || preConfiguredVoiceEndpoint) {
+        window.setAgentEndpoints(preConfiguredChatEndpoint, preConfiguredVoiceEndpoint);
+    }
 
     chatBtn.addEventListener('click', () => {
         const isActive = chatWidget.classList.toggle('active');
@@ -401,6 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.setAgentEndpoints = function(chatEndpoint, voiceEndpoint) {
+    if (!chatAgent && !voiceAgent) {
+        preConfiguredChatEndpoint = chatEndpoint;
+        preConfiguredVoiceEndpoint = voiceEndpoint;
+    }
     if (chatAgent && chatEndpoint) {
         chatAgent.setCloudflareEndpoint(chatEndpoint);
     }
