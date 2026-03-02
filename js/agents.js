@@ -63,7 +63,7 @@ class WebChatAgent {
                     'appointment': 'I can help you book an appointment! Our available slots are Monday to Saturday, 10 AM to 8 PM. Would you like me to check availability for a specific date?',
                     'services': 'We offer comprehensive dental services including general dentistry, cosmetic procedures, root canal treatments, implants, orthodontics, and pediatric care. Which service interests you?',
                     'location': 'We\'re located in Haveri, Karnataka. Would you like directions or our exact address?',
-                    'emergency': 'For dental emergencies, please call us immediately at +91 99999 99999. We prioritize emergency cases.',
+                    'emergency': 'For dental emergencies, please call us immediately at +1 908 538 6155. We prioritize emergency cases.',
                     'default': 'Thank you for your message! Dr. Vinaya and our team are here to help. Could you please provide more details about how we can assist you?'
                 };
 
@@ -409,3 +409,8 @@ window.setAgentEndpoints = function(chatEndpoint, voiceEndpoint) {
     }
     console.log('Agent endpoints configured');
 };
+
+window.setAgentEndpoints(
+  'https://dantaveda-chatbot.santoshhdandin.workers.dev',  // Chat endpoint
+  'https://dantaveda-voiceassistant.santoshhdandin.workers.dev'  // Voice endpoint
+);
