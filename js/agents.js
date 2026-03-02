@@ -60,7 +60,7 @@ class WebChatAgent {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const responses = {
-                    'appointment': 'I can help you book an appointment! Our available slots are Monday to Saturday, 10 AM to 8 PM. Would you like me to check availability for a specific date?',
+                    'appointment': 'I can help you book an appointment! Our available slots are Monday to Saturday, 9 AM to 9 PM. Would you like me to check availability for a specific date?',
                     'services': 'We offer comprehensive dental services including general dentistry, cosmetic procedures, root canal treatments, implants, orthodontics, and pediatric care. Which service interests you?',
                     'location': 'We\'re located in Haveri, Karnataka. Would you like directions or our exact address?',
                     'emergency': 'For dental emergencies, please call us immediately at +1 908 538 6155. We prioritize emergency cases.',
